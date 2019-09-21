@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  ul, ol {
+    list-style: none;
+    padding: 0;
+  }
+  
+  body {
+    font-size: 14px;
+    position: relative;
+  }
+  
+  button {
+    background: none;
+    outline: none;
+    user-select: none;
+  }
+  
+  button {
+    padding: 3px 10px;
+    border: 1px solid #333;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  
+  button:hover {
+    background: #333333;
+    color: #ffffff;
+  }
+  
+  button:active {
+    background: #555555;
+  }
+  
+  input {
+    outline: none;
+  }
+  
+  .clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  /* uploader */
+  #uploader-wrapper {
+    width: 100%;
+    position: relative;
+  }
+
+  #uploader {
+      width: 500px;
+      height: 281px;
+      margin: auto;
+      margin-top: 100px;
+      border: 2px dashed #999999;
+      border-radius: 5px;
+      /* background-size: cover;
+      background-position: center; */
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      user-select:none;
+  }
+
+  #uploader .img {
+    max-width: 500px;
+    max-height: 281px;
+    opacity: 100;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  #uploader.active {
+      /* width: auto; */
+      border: none;
+      background-color: #e4e4e4;
+  }
+
+  #uploader .info-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all .2s;
+      cursor: pointer;
+      border-radius: 5px;
+  }
+
+  #uploader .info-wrapper .title {
+    font-size: 18px;
+  }
+  
+  #uploader.active .info-wrapper {
+      color: transparent;
+  }
+
+  #uploader:hover .info-wrapper {
+      visibility: visible;
+      background: rgba(0, 0, 0, .3);
+      color: #fff;
+  }
+
+  /* colors */
+  #colors > ul {
+    width: 500px;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start; 
+  }
+
+  #colors .colorItem {
+    display: block;
+    width: 120px;
+    height: 40px;
+    margin-bottom: 8px; 
+    margin-right: 6px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px 0px #333;
+    user-select:none;
+    cursor: pointer;
+  }
+
+  #colors .colorItem:nth-child(4n) {
+    margin-right: 0;
+  }
