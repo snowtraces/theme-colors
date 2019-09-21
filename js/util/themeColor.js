@@ -1,4 +1,8 @@
 window.$ = (function (window, $) {
+
+    /**
+     * 颜色信息
+     */
     class rgb {
         constructor(r, g, b, count) {
             this.r = r;
@@ -28,17 +32,15 @@ window.$ = (function (window, $) {
         }
     }
 
-
-    const themeColor = function (imageSelector, callback) {
-        let startTime = new Date().getTime()
+    /**
+     * 获取像素点值
+     * @param {*} imageSelector 
+     */
+    const getPixels = function (imageSelector) {
         const sourceImg = $.el(imageSelector)
         let canvas = document.createElement('canvas')
         let context = canvas.getContext('2d')
 
-        let rgbArray = [];
-        for (let j = 0; j < 8; j++) {
-            rgbArray[j] = new rgb(0, 0, 0, 0);
-        }
         if (!context) {
             $.errorMsg('没有找到图片')
             return
@@ -49,18 +51,32 @@ window.$ = (function (window, $) {
         context.drawImage(sourceImg, 0, 0);
 
         let imgData = context.getImageData(0, 0, width, height);
-        let length = imgData.data.length;
+
+        return imgData.data
+    }
+
+    /**
+     * 中位切分法
+     * @param {*} imageSelector 
+     */
+    const themeColor = function (imageSelector) {
+        let pixels = getPixels(imageSelector)
+        let length = pixels.length;
         // 将颜色放入对应位置
         let i = -4
         let blockSize = 47 // 选取密度
+        let rgbArray = new Array(8)
+        for (let j = 0; j < 8; j++) {
+            rgbArray[j] = new rgb(0, 0, 0, 0);
+        }
         while ((i += blockSize * 4) < length) {
-            let rIndex = (imgData.data[i] - 128) >> 31;
-            let gIndex = (imgData.data[i + 1] - 128) >> 31;
-            let bIndex = (imgData.data[i + 2] - 128) >> 31;
+            let rIndex = (pixels[i] - 128) >> 31;
+            let gIndex = (pixels[i + 1] - 128) >> 31;
+            let bIndex = (pixels[i + 2] - 128) >> 31;
             let index = ((rIndex + 1) << 2) + ((gIndex + 1) << 1) + (bIndex + 1); // 计算二进制索引
-            rgbArray[index].r += imgData.data[i];
-            rgbArray[index].g += imgData.data[i + 1];
-            rgbArray[index].b += imgData.data[i + 2];
+            rgbArray[index].r += pixels[i];
+            rgbArray[index].g += pixels[i + 1];
+            rgbArray[index].b += pixels[i + 2];
             rgbArray[index].count++;
         }
 
@@ -68,7 +84,6 @@ window.$ = (function (window, $) {
             return b.count - a.count
         })
 
-        log('theme color cost: ' + (new Date().getTime() - startTime))
         return rgbArray.map(_rgb => {
             let r = ~~(_rgb.r / _rgb.count)
             let b = ~~(_rgb.b / _rgb.count)
@@ -78,7 +93,8 @@ window.$ = (function (window, $) {
     }
 
     const func = {
-        themeColor: themeColor
+        themeColor: themeColor,
+        rgb: rgb,
     }
     for (const _func in func) {
         $[_func] = func[_func]

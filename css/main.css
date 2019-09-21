@@ -54,10 +54,10 @@
   }
 
   #uploader {
-      width: 500px;
-      height: 281px;
+      width: 602px;
+      height: 338px;
       margin: auto;
-      margin-top: 100px;
+      margin-top: 60px;
       border: 2px dashed #999999;
       border-radius: 5px;
       /* background-size: cover;
@@ -69,8 +69,8 @@
   }
 
   #uploader .img {
-    max-width: 500px;
-    max-height: 281px;
+    max-width: 602px;
+    max-height: 338px;
     opacity: 100;
     visibility: hidden;
     pointer-events: none;
@@ -111,7 +111,7 @@
 
   /* colors */
   #colors > ul {
-    width: 500px;
+    width: 602px;
     margin: auto;
     margin-top: 30px;
     display: flex;
@@ -121,12 +121,12 @@
 
   #colors .colorItem {
     display: block;
-    width: 120px;
-    height: 40px;
+    width: 70px;
+    height: 30px;
     margin-bottom: 8px; 
     margin-right: 6px;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
     color: #fff;
     border-radius: 2px;
     box-shadow: 1px 1px 2px 0px #333;
@@ -134,6 +134,6 @@
     cursor: pointer;
   }
 
-  #colors .colorItem:nth-child(4n) {
+  #colors .colorItem:nth-child(8n) {
     margin-right: 0;
   }

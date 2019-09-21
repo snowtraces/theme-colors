@@ -27,8 +27,10 @@
         },
         bindEventHub() {
             window.eventHub.on('imageLoaded', (selector) => {
-                let colors = $.themeColor(selector)
-                this.view.render(colors)
+                // let colors = $.themeColor(selector)
+                let octreeColors = new Octree().themeColor(selector, 8)
+
+                this.view.render([...octreeColors])
             })
 
         }
