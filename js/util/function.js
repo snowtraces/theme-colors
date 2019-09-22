@@ -57,7 +57,7 @@ window.$ = (function (window, $) {
     const copy = function (text) {
         return new Promise((resolve, reject) => {
             var targetEL = document.createElement("textarea")
-            targetEL.style.position = "absolute"
+            targetEL.style.position = "fixed"
             targetEL.style.left = "-9999px"
             targetEL.style.top = "0"
             document.body.append(targetEL)
@@ -115,7 +115,7 @@ window.$ = (function (window, $) {
                 position: fixed;
                 left: 0;
                 right: 0;
-                top: 50px;
+                top: 30px;
                 z-index: 999999;
                 width: auto;
                 max-width: 200px;
