@@ -41,47 +41,15 @@ Octree.prototype.themeColor = function (imageSelector, maxNumberOfColor = 8) {
         });
     }
 
-    //传入颜色信息，开始建树
+    // 传入颜色信息，开始建树
     this.buildOctree(array, maxNumberOfColor);
 
+    // 叶子节点遍历，输出最终颜色
     let colors = []
     this.colorsStats(this.root, colors)
-
-    colors.sort(function (a, b) {
-        return b.count - a.count
-    })
-
-    return colors
+    
+    return colors.sort((a, b) => b.count - a.count)
 }
-
-
-/**
- * 获取像素点值
- * @param {*} imageSelector 
- */
-Octree.prototype.getPixels = function (imageSelector) {
-    const sourceImg = $.el(imageSelector)
-    let canvas = document.createElement('canvas')
-    let context = canvas.getContext('2d')
-
-    let rgbArray = [];
-    for (let j = 0; j < 8; j++) {
-        rgbArray[j] = new rgb(0, 0, 0, 0);
-    }
-    if (!context) {
-        $.errorMsg('没有找到图片')
-        return
-    }
-
-    let height = canvas.height = sourceImg.naturalHeight;
-    let width = canvas.width = sourceImg.naturalWidth;
-    context.drawImage(sourceImg, 0, 0);
-
-    let imgData = context.getImageData(0, 0, width, height);
-
-    return imgData.data
-}
-
 
 /**
  * createNode

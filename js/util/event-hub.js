@@ -7,6 +7,6 @@ window.eventHub = {
         }
     },
     on(eventName, fn) {
-        (this.events[eventName] ||(this.events[eventName] = [])).push(fn)
+        (this.events[eventName] || (this.events[eventName] = [])).push(fn)
     }
 }

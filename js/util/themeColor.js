@@ -39,15 +39,10 @@ window.$ = (function (window, $) {
     const getPixels = function (imageSelector) {
         const sourceImg = $.el(imageSelector)
         let canvas = document.createElement('canvas')
-        let context = canvas.getContext('2d')
-
-        if (!context) {
-            $.errorMsg('没有找到图片')
-            return
-        }
 
         let height = canvas.height = sourceImg.naturalHeight;
         let width = canvas.width = sourceImg.naturalWidth;
+        let context = canvas.getContext('2d')
         context.drawImage(sourceImg, 0, 0);
 
         let imgData = context.getImageData(0, 0, width, height);
@@ -95,6 +90,7 @@ window.$ = (function (window, $) {
     const func = {
         themeColor: themeColor,
         rgb: rgb,
+        getPixels: getPixels
     }
     for (const _func in func) {
         $[_func] = func[_func]

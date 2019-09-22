@@ -15,16 +15,12 @@ window.$ = (function (window, $) {
         const nodeList = elAll(selector)
         if (!nodeList || nodeList.length === 0) {
             bindEventForce(selector, event, func)
-            return false
+        } else {
+            let eventList = event.split(' ').map(e => e.trim())
+            nodeList.forEach(
+                node => eventList.forEach(e => node.addEventListener(e, func, false))
+            )
         }
-        let eventList = event.split(' ').map(e => e.trim())
-        nodeList.forEach(
-            node => {
-                eventList.forEach(e => {
-                    node.addEventListener(e, func, false)
-                })
-            }
-        )
     }
 
     /**
@@ -36,11 +32,7 @@ window.$ = (function (window, $) {
             (delegation ? el(delegation) : document).addEventListener(e, (_e) => {
                 const _list = elAll(selector)
                 _list.forEach(
-                    item => {
-                        if (_e.target === item || item.contains(_e.target)) {
-                            func.call(item, _e)
-                        }
-                    }
+                    item => (_e.target === item || item.contains(_e.target)) && func.call(item, _e)
                 )
             }, false)
         })
@@ -61,8 +53,8 @@ window.$ = (function (window, $) {
             targetEL.style.left = "-9999px"
             targetEL.style.top = "0"
             document.body.append(targetEL)
-            targetEL.textContent=text
-    
+            targetEL.textContent = text
+
             targetEL.focus()
             targetEL.setSelectionRange(0, targetEL.value.length)
             document.execCommand('copy')
@@ -171,7 +163,7 @@ window.$ = (function (window, $) {
     /**
      * 异步请求
      */
-    let get = function (url, data) {
+    const get = function (url, data) {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             if (data) {
@@ -182,20 +174,16 @@ window.$ = (function (window, $) {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status < 400) {
                         let result = JSON.parse(xhr.responseText)
-                        if (result.status < 200) {
-                            resolve(result);
-                        } else {
-                            errorMsg(result.msg || '失败')
-                        }
+                        resolve(result);
                     } else {
-                        errorMsg(result.msg || '失败')
+                        reject ? reject() : errorMsg(result.msg || '失败')
                     }
                 }
             }
             xhr.send(null);
         })
     }
-    let post = function (url, data) {
+    const post = function (url, data) {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
@@ -203,14 +191,10 @@ window.$ = (function (window, $) {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status < 400) {
                         let result = JSON.parse(xhr.responseText)
-                        if (result.status < 200) {
-                            resolve(result);
-                            successMsg(result.msg || '成功')
-                        } else {
-                            errorMsg(result.msg || '失败')
-                        }
+                        resolve(result);
+                        successMsg(result.msg || '成功')
                     } else {
-                        errorMsg(result.msg || '失败')
+                        reject ? reject() : errorMsg(result.msg || '失败')
                     }
                 }
             }
@@ -218,7 +202,7 @@ window.$ = (function (window, $) {
         })
     }
 
-    let json2FormData = function (data) {
+    const json2FormData = function (data) {
         let formData = new FormData()
         for (let key in data) {
             formData.set(key, data[key])
