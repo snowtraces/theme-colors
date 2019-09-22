@@ -28,7 +28,7 @@ class OctreeNode {
 }
 
 Octree.prototype.themeColor = function (imageSelector, maxNumberOfColor = 8) {
-    let pixels = this.getPixels(imageSelector);
+    let pixels = $.getPixels(imageSelector);
     //像素点转换成rgb颜色信息
     let i = -4
     let array = [];
