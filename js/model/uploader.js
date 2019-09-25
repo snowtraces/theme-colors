@@ -33,7 +33,7 @@
             $.dragUpload(this.view.el, (data) => {
                 this.view.loadImage(data)
                 $.el(this.view.el + ' .img').src = data
-            })
+            }, 'binary')
             $.bindEvent(this.view.el + ' .img', 'load', (e) => {
                 window.eventHub.emit("imageLoaded", '#uploader .img')
             })
